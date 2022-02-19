@@ -2,7 +2,11 @@
 import re
 import getpass
 from concurrent.futures import ThreadPoolExecutor
-from netmiko import ConnectHandler
+from netmiko import (
+    ConnectHandler,
+    NetmikoTimeoutException,
+    NetmikoAuthenticationException,
+)
 import pynetbox
 
 # Get values from user
@@ -57,6 +61,7 @@ def show_version(dev_type, dev_ip, dev_id, command, regex):
     return dev_id, match
 
 
+# Describe test functions
 def test_active():
     """Test function to check 'active' dictionary"""
     assert bool(active) is True, "Object should not be empty"
@@ -85,28 +90,41 @@ device_list = list(nb.dcim.devices.all())
 active = {}
 for d in device_list:
     if str(d.status) == status_name and str(d.tenant) == tenant_name:
-        active[str(d.tags[0])] = [
+        active[str(d.id)] = [
             str(d.primary_ip).split("/", maxsplit=1)[0],
-            str(d.id),
+            str(d.tags[0]),
+            str(d.name),
         ]
 
-# Use of multitheading to concurrently connect to each device from 'active' dict.
+# Use of multitheading to concurrently connect to each device from 'active' dict
+# and send show command
 # Generate list of function results
 version_list = []
 with ThreadPoolExecutor(max_workers=6) as executor:
     future_list = []
     for device in active:
+        ip, tag, name = active[device]
         future = executor.submit(
             show_version,
+            tag,
+            ip,
             device,
-            active[device][0],
-            active[device][1],
-            type_to_command[device],
-            regex_dict[device],
+            type_to_command[tag],
+            regex_dict[tag],
         )
         future_list.append(future)
     for f in future_list:
-        version_list.append(f.result())
+        try:
+            version_list.append(f.result())
+        except NetmikoTimeoutException as nte:
+            print("######")
+            print(nte)
+            print("######\n")
+        except NetmikoAuthenticationException as nae:
+            print("######")
+            print(nae)
+            print("######\n")
+
 
 # Update SW version on Netbox for each resulting device
 # Pytest is not checking this part,
