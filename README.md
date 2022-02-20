@@ -8,12 +8,12 @@
 - Script updates the value of custom_fiels:sw_version on Netbox for each id in the dictionary. 
 
 # Task requirements:
-Collect information for devices with Status = Active, Tenant = NOC in Netbox - **DONE**
-Information to collect: software version - **DONE**
-Custom field to update: "sw_version" - **DONE**
-Devices: Cisco Catalyst IOS, Cisco Nexus OS, Cisco ASA OS, Aruba OS, PaloAlto PAN-OS (more device types covered more points) + **JUNOS** - **DONE**
-Should contain unit tests – pytest should be used - **DONE**
-Should pass pylint and black (optional) - **DONE**
+- Collect information for devices with Status = Active, Tenant = NOC in Netbox - **DONE**
+- Information to collect: software version - **DONE**
+- Custom field to update: "sw_version" - **DONE**
+- Devices: Cisco Catalyst IOS, Cisco Nexus OS, Cisco ASA OS, Aruba OS, PaloAlto PAN-OS (more device types covered more points) + **JUNOS** - **DONE**
+- Should contain unit tests – pytest should be used - **DONE**
+- Should pass pylint and black (optional) - **DONE**
 
 # Comments
 Script implies that:
