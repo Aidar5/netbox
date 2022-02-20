@@ -11,7 +11,7 @@
 - Collect information for devices with Status = Active, Tenant = NOC in Netbox - **DONE**
 - Information to collect: software version - **DONE**
 - Custom field to update: "sw_version" - **DONE**
-- Devices: Cisco Catalyst IOS, Cisco Nexus OS, Cisco ASA OS, Aruba OS, PaloAlto PAN-OS (more device types covered more points) + **JUNOS** - **DONE**
+- Devices: Cisco Catalyst IOS, Cisco Nexus OS, Cisco ASA OS, Aruba OS, PaloAlto PAN-OS + **JUNOS** - **DONE**
 - Should contain unit tests – pytest should be used - **DONE**
 - Should pass pylint and black (optional) - **DONE**
 
@@ -21,7 +21,7 @@ Script implies that:
 - Device username priveledge level allows login directly to enable mode (like bypassing EXEC mode in Cisco)
 - Device "tag" field in Netbox contains Netmiko "device_type" value.
 
-Netmiko was chosen because it is simple and supports all devices from requirements.
-User is promted to enter Status and Tenant. This approach provides flexibility in choosing other values, not only 'Active': 'NOC'.
-Multithreading is used for faster collecting of information from devices. It becomes benefitial if there are hundreds or thousands devices need to be polled.
-Try/except helps to avoid breaking of script run in case if some devices are not reachable or access is denied. Also, in case of exception the script informs which device has an issue.
+- Netmiko was chosen because it is simple and supports all devices from requirements.
+- User is promted to enter Status and Tenant. This approach provides flexibility in choosing other values, not only 'Active': 'NOC'.
+- Multithreading is used for faster collecting of information from devices. It becomes benefitial if there are hundreds or thousands devices need to be polled.
+- Try/except helps to avoid breaking of script run in case if some devices are not reachable or access is denied. Also, in case of exception the script informs which device has an issue.
