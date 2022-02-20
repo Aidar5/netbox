@@ -15,12 +15,13 @@
 - Should contain unit tests – pytest should be used - **DONE**
 - Should pass pylint and black (optional) - **DONE**
 
-# Comments
+# Implications
 Script implies that:
--- All devices have the same credentials to login via SSH.
--- Device username priveledge level allows login directly to enable mode (like bypassing EXEC mode in Cisco)
--- Device "tag" field in Netbox contains Netmiko "device_type" value.
+- All devices have the same credentials to login via SSH.
+- Device username priveledge level allows login directly to enable mode (like bypassing EXEC mode in Cisco)
+- Device "tag" field in Netbox contains Netmiko "device_type" value.
 
+# Comments
 - Netmiko was chosen because it is simple and supports all devices from requirements.
 - User is promted to enter Status and Tenant. This approach provides flexibility in choosing other values, not only 'Active': 'NOC'.
 - Multithreading is used for faster collecting of information from devices. It becomes benefitial if there are hundreds or thousands devices need to be polled.
